@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styles from './Demo1.module.scss';
 import type { IDemo1Props } from './IDemo1Props';
-import { Stack, Text, MessageBar, MessageBarType, Label } from '@fluentui/react';
+import { Stack, Text, MessageBar, MessageBarType, Label, PrimaryButton } from '@fluentui/react';
 
 interface ColorPalette {
   hex: string;
@@ -122,6 +122,17 @@ const Demo1: React.FC<IDemo1Props> = (props) => {
   const [palette, setPalette] = React.useState<ColorPalette[]>(generateHarmoniousPalette('#2196F3'));
   const [copiedColor, setCopiedColor] = React.useState<string | null>(null);
   const [copyError, setCopyError] = React.useState<string | null>(null);
+  const [shareUrl, setShareUrl] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const sharedColor = urlParams.get('color');
+    if (sharedColor && /^[0-9A-Fa-f]{6}$/.test(sharedColor)) {
+      const colorWithHash = `#${sharedColor}`;
+      setBaseColor(colorWithHash);
+      setPalette(generateHarmoniousPalette(colorWithHash));
+    }
+  }, []);
 
   const handleColorChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const newColor = event.target.value;
@@ -140,6 +151,7 @@ const Demo1: React.FC<IDemo1Props> = (props) => {
       await navigator.clipboard.writeText(hex);
       setCopiedColor(hex);
       setCopyError(null);
+      setShareUrl(null);
 
       setTimeout(() => {
         setCopiedColor(null);
@@ -147,6 +159,30 @@ const Demo1: React.FC<IDemo1Props> = (props) => {
     } catch {
       setCopyError('Clipboard access denied. Please allow clipboard access.');
       setCopiedColor(null);
+    }
+  };
+
+  const handleSharePalette = async (): Promise<void> => {
+    try {
+      if (!navigator.clipboard) {
+        setCopyError('Clipboard not supported in this browser');
+        return;
+      }
+
+      const colorParam = baseColor.replace('#', '');
+      const shareableUrl = `${window.location.origin}${window.location.pathname}?color=${colorParam}`;
+      
+      await navigator.clipboard.writeText(shareableUrl);
+      setShareUrl(shareableUrl);
+      setCopiedColor(null);
+      setCopyError(null);
+
+      setTimeout(() => {
+        setShareUrl(null);
+      }, 3000);
+    } catch {
+      setCopyError('Failed to copy share link. Please try again.');
+      setShareUrl(null);
     }
   };
 
@@ -171,12 +207,25 @@ const Demo1: React.FC<IDemo1Props> = (props) => {
             <Text variant="medium" styles={{ root: { marginLeft: '12px', fontWeight: 600 } }}>
               {baseColor.toUpperCase()}
             </Text>
+            <PrimaryButton
+              text="Share Palette"
+              onClick={handleSharePalette}
+              styles={{ root: { marginLeft: '16px' } }}
+              iconProps={{ iconName: 'Share' }}
+              ariaLabel="Share palette with colleagues"
+            />
           </div>
         </Stack.Item>
 
         {copiedColor && (
           <MessageBar messageBarType={MessageBarType.success}>
             Copied: {copiedColor}
+          </MessageBar>
+        )}
+
+        {shareUrl && (
+          <MessageBar messageBarType={MessageBarType.success}>
+            Share link copied to clipboard! Send it to your colleagues to share this palette.
           </MessageBar>
         )}
 
