@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styles from './Demo1.module.scss';
 import type { IDemo1Props } from './IDemo1Props';
-import { Stack, Text } from '@fluentui/react';
+import { Stack, Text, MessageBar, MessageBarType } from '@fluentui/react';
 
 const COLORS = [
   { hex: '#E3F2FD', name: 'Light Blue 50' },
@@ -12,6 +12,30 @@ const COLORS = [
 ];
 
 const Demo1: React.FC<IDemo1Props> = (props) => {
+  const [copiedColor, setCopiedColor] = React.useState<string | null>(null);
+  const [copyError, setCopyError] = React.useState<string | null>(null);
+
+  const handleColorClick = async (hex: string): Promise<void> => {
+    try {
+      if (!navigator.clipboard) {
+        setCopyError('Clipboard not supported in this browser');
+        setCopiedColor(null);
+        return;
+      }
+
+      await navigator.clipboard.writeText(hex);
+      setCopiedColor(hex);
+      setCopyError(null);
+
+      // Clear success message after 2 seconds
+      setTimeout(() => {
+        setCopiedColor(null);
+      }, 2000);
+    } catch {
+      setCopyError('Clipboard access denied. Please allow clipboard access.');
+      setCopiedColor(null);
+    }
+  };
 
   return (
     <section className={`${styles.demo1} ${props.hasTeamsContext ? styles.teams : ''}`}>
@@ -20,6 +44,18 @@ const Demo1: React.FC<IDemo1Props> = (props) => {
           <Text variant="xxLarge" block>Color Palette Generator</Text>
           <Text variant="medium" block>Click any color to copy its hex code to clipboard</Text>
         </Stack.Item>
+
+        {copiedColor && (
+          <MessageBar messageBarType={MessageBarType.success}>
+            Copied: {copiedColor}
+          </MessageBar>
+        )}
+
+        {copyError && (
+          <MessageBar messageBarType={MessageBarType.error}>
+            {copyError}
+          </MessageBar>
+        )}
         
         <Stack horizontal tokens={{ childrenGap: 15 }} wrap>
           {COLORS.map((color) => (
@@ -39,6 +75,7 @@ const Demo1: React.FC<IDemo1Props> = (props) => {
                   }
                 }
               }}
+              onClick={() => handleColorClick(color.hex)}
             >
               <div
                 style={{
@@ -51,6 +88,14 @@ const Demo1: React.FC<IDemo1Props> = (props) => {
                 role="button"
                 tabIndex={0}
                 aria-label={`Copy ${color.hex} to clipboard`}
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    handleColorClick(color.hex).catch(() => {
+                      // Error already handled in handleColorClick
+                    });
+                  }
+                }}
               />
               <Text variant="small" styles={{ root: { fontWeight: 600 } }}>
                 {color.hex}

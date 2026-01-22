@@ -37,8 +37,8 @@
 **Tasks Status:**
 - [x] Task 1: Refactor Demo1 component structure
 - [x] Task 2: Implement color swatch rendering
-- [ ] Task 3: Implement click-to-copy functionality
-- [ ] Task 4: Add MessageBar feedback component
+- [x] Task 3: Implement click-to-copy functionality
+- [x] Task 4: Add MessageBar feedback component
 - [ ] Task 5: Style and polish
 - [ ] Task N: Final verification & audit
 
