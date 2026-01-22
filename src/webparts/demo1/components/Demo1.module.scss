@@ -10,6 +10,39 @@
   }
 }
 
+.colorPickerWrapper {
+  position: relative;
+  display: inline-block;
+}
+
+.colorPicker {
+  width: 80px;
+  height: 80px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  
+  &:hover {
+    border-color: #999;
+    transform: scale(1.05);
+  }
+  
+  &::-webkit-color-swatch-wrapper {
+    padding: 0;
+  }
+  
+  &::-webkit-color-swatch {
+    border: none;
+    border-radius: 6px;
+  }
+  
+  &::-moz-color-swatch {
+    border: none;
+    border-radius: 6px;
+  }
+}
+
 .welcome {
   text-align: center;
 }
