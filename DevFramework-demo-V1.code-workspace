@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"name": "DevFramework",
+			"path": "../DevFramework"
+		},
+		{
+			"name": "DevFramework-demo-V1",
+			"path": "."
+		}
+	],
+	"settings": {}
+}

@@ -1,0 +1,40 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/spfx-build/package-solution.schema.json",
+  "solution": {
+    "name": "dev-framework-demo-v-1-client-side-solution",
+    "id": "29538057-80fc-491c-aa58-5ef719683910",
+    "version": "1.0.0.0",
+    "includeClientSideAssets": true,
+    "skipFeatureDeployment": true,
+    "isDomainIsolated": false,
+    "developer": {
+      "name": "",
+      "websiteUrl": "",
+      "privacyUrl": "",
+      "termsOfUseUrl": "",
+      "mpnId": "Undefined-1.21.1"
+    },
+    "metadata": {
+      "shortDescription": {
+        "default": "dev-framework-demo-v-1 description"
+      },
+      "longDescription": {
+        "default": "dev-framework-demo-v-1 description"
+      },
+      "screenshotPaths": [],
+      "videoUrl": "",
+      "categories": []
+    },
+    "features": [
+      {
+        "title": "dev-framework-demo-v-1 Feature",
+        "description": "The feature that activates elements of the dev-framework-demo-v-1 solution.",
+        "id": "bfec7073-5e11-4004-959c-f9da56145df3",
+        "version": "1.0.0.0"
+      }
+    ]
+  },
+  "paths": {
+    "zippedPackage": "solution/dev-framework-demo-v-1.sppkg"
+  }
+}
