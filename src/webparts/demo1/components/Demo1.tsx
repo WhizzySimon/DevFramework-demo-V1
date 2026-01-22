@@ -1,7 +1,7 @@
 import * as React from 'react';
 import styles from './Demo1.module.scss';
 import type { IDemo1Props } from './IDemo1Props';
-import { Stack, Text, MessageBar, MessageBarType, Label } from '@fluentui/react';
+import { Stack, Text, MessageBar, MessageBarType, Label, PrimaryButton } from '@fluentui/react';
 import { generatePalette, type ColorInfo } from '../utils/colorUtils';
 
 const Demo1: React.FC<IDemo1Props> = (props) => {
@@ -9,6 +9,14 @@ const Demo1: React.FC<IDemo1Props> = (props) => {
   const [generatedPalette, setGeneratedPalette] = React.useState<ColorInfo[]>([]);
   const [copiedColor, setCopiedColor] = React.useState<string | null>(null);
   const [copyError, setCopyError] = React.useState<string | null>(null);
+
+  React.useEffect(() => {
+    const urlParams = new URLSearchParams(window.location.search);
+    const colorParam = urlParams.get('color');
+    if (colorParam) {
+      setSelectedColor(colorParam);
+    }
+  }, []);
 
   React.useEffect(() => {
     setGeneratedPalette(generatePalette(selectedColor));
@@ -36,6 +44,28 @@ const Demo1: React.FC<IDemo1Props> = (props) => {
     }
   };
 
+  const handleSharePalette = async (): Promise<void> => {
+    try {
+      if (!navigator.clipboard) {
+        setCopyError('Clipboard not supported in this browser');
+        setCopiedColor(null);
+        return;
+      }
+
+      const shareUrl = `${window.location.origin}${window.location.pathname}?color=${encodeURIComponent(selectedColor)}`;
+      await navigator.clipboard.writeText(shareUrl);
+      setCopiedColor('Shareable link copied to clipboard!');
+      setCopyError(null);
+
+      setTimeout(() => {
+        setCopiedColor(null);
+      }, 2000);
+    } catch {
+      setCopyError('Clipboard access denied. Please allow clipboard access.');
+      setCopiedColor(null);
+    }
+  };
+
   return (
     <section className={`${styles.demo1} ${props.hasTeamsContext ? styles.teams : ''}`}>
       <Stack tokens={{ childrenGap: 20 }}>
@@ -46,20 +76,28 @@ const Demo1: React.FC<IDemo1Props> = (props) => {
 
         <Stack.Item>
           <Label htmlFor="colorPicker">Base Color</Label>
-          <input
-            id="colorPicker"
-            type="color"
-            value={selectedColor}
-            onChange={(e) => setSelectedColor(e.target.value)}
-            style={{
-              width: '200px',
-              height: '60px',
-              border: '1px solid #ddd',
-              borderRadius: '4px',
-              cursor: 'pointer'
-            }}
-            aria-label="Select base color for palette generation"
-          />
+          <Stack horizontal tokens={{ childrenGap: 10 }} verticalAlign="end">
+            <input
+              id="colorPicker"
+              type="color"
+              value={selectedColor}
+              onChange={(e) => setSelectedColor(e.target.value)}
+              style={{
+                width: '200px',
+                height: '60px',
+                border: '1px solid #ddd',
+                borderRadius: '4px',
+                cursor: 'pointer'
+              }}
+              aria-label="Select base color for palette generation"
+            />
+            <PrimaryButton
+              text="Share Palette"
+              onClick={handleSharePalette}
+              styles={{ root: { height: '60px' } }}
+              ariaLabel="Copy shareable link to clipboard"
+            />
+          </Stack>
         </Stack.Item>
 
         {copiedColor && (
