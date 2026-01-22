@@ -10,6 +10,38 @@
   }
 }
 
+.colorPickerSection {
+  padding: 16px;
+  background-color: #f5f5f5;
+  border-radius: 8px;
+  border: 1px solid #e0e0e0;
+}
+
+.colorPickerWrapper {
+  display: flex;
+  align-items: center;
+  margin-top: 8px;
+}
+
+.colorPicker {
+  width: 80px;
+  height: 50px;
+  border: 2px solid #ddd;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: border-color 0.2s;
+
+  &:hover {
+    border-color: #2196F3;
+  }
+
+  &:focus {
+    outline: none;
+    border-color: #2196F3;
+    box-shadow: 0 0 0 2px rgba(33, 150, 243, 0.2);
+  }
+}
+
 .welcome {
   text-align: center;
 }
