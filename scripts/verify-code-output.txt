@@ -1,0 +1,36 @@
+
+=== DevFramework-demo-V1 Code Verification ===
+Timestamp: 2026-01-22 14:16:30
+
+--- Step 1: gulp bundle ---
+Build target: DEBUG
+[[90m14:16:32[39m] Using gulpfile E:\Dev\Repos\DevFramework-demo-V1\gulpfile.js
+[[90m14:16:32[39m] Starting 'bundle'...
+[[90m14:16:32[39m] Starting gulp
+[[90m14:16:32[39m] Starting subtask '[36mpre-copy[39m'...
+[[90m14:16:32[39m] Finished subtask '[36mpre-copy[39m' after [35m18 ms[39m
+[[90m14:16:32[39m] Starting subtask '[36mcopy-static-assets[39m'...
+[[90m14:16:32[39m] Starting subtask '[36msass[39m'...
+[[90m14:16:32[39m] Finished subtask '[36msass[39m' after [35m345 ms[39m
+[[90m14:16:32[39m] Starting subtask '[36mlint[39m'...
+[[90m14:16:32[39m] [[36mlint[39m] eslint version: 8.57.1
+[[90m14:16:32[39m] Starting subtask '[36mtsc[39m'...
+[[90m14:16:32[39m] [[36mtsc[39m] typescript version: 5.3.3
+[[90m14:16:32[39m] Finished subtask '[36mcopy-static-assets[39m' after [35m400 ms[39m
+[[90m14:16:34[39m] Finished subtask '[36mtsc[39m' after [35m2.24 s[39m
+[[90m14:16:37[39m] Finished subtask '[36mlint[39m' after [35m4.45 s[39m
+[[90m14:16:37[39m] Starting subtask '[36mpost-copy[39m'...
+[[90m14:16:37[39m] Finished subtask '[36mpost-copy[39m' after [35m79 ╬╝s[39m
+[[90m14:16:37[39m] Starting subtask '[36mconfigure-webpack[39m'...
+[[90m14:16:37[39m] Finished subtask '[36mconfigure-webpack[39m' after [35m561 ms[39m
+[[90m14:16:37[39m] Starting subtask '[36mwebpack[39m'...
+[[90m14:16:38[39m] Finished subtask '[36mwebpack[39m' after [35m1.1 s[39m
+[[90m14:16:38[39m] Finished 'bundle' after 6.49 s
+[[90m14:16:39[39m] [35m==================[ Finished ]==================[39m
+[[90m14:16:39[39m] Project dev-framework-demo-v-1 version:[33m0.0.1[39m
+[[90m14:16:39[39m] Build tools version:[33m3.19.0[39m
+[[90m14:16:39[39m] Node version:[33mv22.20.0[39m
+[[90m14:16:39[39m] Total duration:[33m9.12 s[39m
+
+
+STATUS: ALL PASSED

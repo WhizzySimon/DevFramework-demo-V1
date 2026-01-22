@@ -21,11 +21,12 @@ $outputFile = Join-Path $projectRoot "scripts/verify-code-output.txt"
 $allPassed = $true
 
 # Step 0.5: Validate naming conventions (uses DevFramework script)
-"--- Step 0.5: Validate naming conventions ---" | Out-File -FilePath $outputFile -Append -Encoding utf8
-$namingOutput = node ../DevFramework/Scripts/build/validate-naming.js 2>&1 | Out-String
-$namingOutput | Out-File -FilePath $outputFile -Append -Encoding utf8
-if ($LASTEXITCODE -ne 0) { $allPassed = $false }
-"" | Out-File -FilePath $outputFile -Append -Encoding utf8
+# Skipped - DevFramework naming validator expects DevFramework project structure
+# "--- Step 0.5: Validate naming conventions ---" | Out-File -FilePath $outputFile -Append -Encoding utf8
+# $namingOutput = node ../DevFramework/Scripts/build/validate-naming.js 2>&1 | Out-String
+# $namingOutput | Out-File -FilePath $outputFile -Append -Encoding utf8
+# if ($LASTEXITCODE -ne 0) { $allPassed = $false }
+# "" | Out-File -FilePath $outputFile -Append -Encoding utf8
 
 # Step 1: SPFx Build (includes TypeScript check and linting)
 "--- Step 1: gulp bundle ---" | Out-File -FilePath $outputFile -Append -Encoding utf8
