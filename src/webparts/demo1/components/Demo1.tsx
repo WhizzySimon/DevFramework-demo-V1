@@ -103,6 +103,7 @@ const DEFAULT_BASE_COLOR = '#2196F3';
 
 const Demo1: React.FC<IDemo1Props> = (props) => {
   const [baseColor, setBaseColor] = React.useState<string>(DEFAULT_BASE_COLOR);
+  // @ts-ignore - setColorShades intentionally unused (bug demo)
   const [colorShades, setColorShades] = React.useState<ColorShade[]>(
     generateColorShades(DEFAULT_BASE_COLOR)
   );
@@ -112,7 +113,8 @@ const Demo1: React.FC<IDemo1Props> = (props) => {
   const handleColorChange = (event: React.ChangeEvent<HTMLInputElement>): void => {
     const newColor = event.target.value;
     setBaseColor(newColor);
-    setColorShades(generateColorShades(newColor));
+    // BUG: Palette doesn't update when color changes
+    // setColorShades(generateColorShades(newColor));
   };
 
   const handleColorClick = async (hex: string): Promise<void> => {
